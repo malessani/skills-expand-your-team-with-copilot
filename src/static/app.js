@@ -570,7 +570,45 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      <div class="share-buttons">
+        <span class="share-label">Share:</span>
+        <a class="share-btn share-twitter" href="#" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">𝕏</a>
+        <a class="share-btn share-facebook" href="#" title="Share on Facebook" aria-label="Share on Facebook">f</a>
+        <button class="share-btn share-copy" title="Copy link" aria-label="Copy link to clipboard">🔗</button>
+      </div>
     `;
+
+    // Build the shareable URL for this activity
+    const shareUrl = `${window.location.origin}${window.location.pathname}?activity=${encodeURIComponent(name)}`;
+    const shareText = `Check out this activity at Mergington High School: ${name}`;
+
+    // Set up Twitter share link
+    const twitterBtn = activityCard.querySelector(".share-twitter");
+    twitterBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+    twitterBtn.target = "_blank";
+    twitterBtn.rel = "noopener noreferrer";
+
+    // Set up Facebook share link
+    const facebookBtn = activityCard.querySelector(".share-facebook");
+    facebookBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    facebookBtn.target = "_blank";
+    facebookBtn.rel = "noopener noreferrer";
+
+    // Set up copy link button
+    const copyBtn = activityCard.querySelector(".share-copy");
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        copyBtn.textContent = "✓";
+        setTimeout(() => {
+          copyBtn.textContent = "🔗";
+        }, 2000);
+      }).catch(() => {
+        copyBtn.textContent = "✗";
+        setTimeout(() => {
+          copyBtn.textContent = "🔗";
+        }, 2000);
+      });
+    });
 
     // Add click handlers for delete buttons
     const deleteButtons = activityCard.querySelectorAll(".delete-participant");
