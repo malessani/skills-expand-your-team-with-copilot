@@ -103,9 +103,18 @@
 
           <!-- Activities Content -->
           <div class="activities-content">
+            <div class="view-toggle-container">
+              <div class="view-toggle-buttons" role="group" aria-label="View mode">
+                <button id="card-view-btn" class="view-toggle-btn active" title="Card View" aria-label="Switch to card view">⊞ Cards</button>
+                <button id="calendar-view-btn" class="view-toggle-btn" title="Calendar View" aria-label="Switch to calendar view">📅 Calendar</button>
+              </div>
+            </div>
             <div id="activities-list">
               <!-- Activities will be loaded here -->
               <p>Loading activities...</p>
+            </div>
+            <div id="calendar-view" class="hidden">
+              <!-- Calendar will be rendered here -->
             </div>
             <div id="message" class="hidden message"></div>
           </div>
