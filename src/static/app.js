@@ -15,6 +15,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
 
+  // Dark mode toggle
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  const darkModeIcon = document.getElementById("dark-mode-icon");
+  const darkModeLabel = document.getElementById("dark-mode-label");
+
+  function applyDarkMode(isDark) {
+    document.body.classList.toggle("dark-mode", isDark);
+    darkModeIcon.textContent = isDark ? "☀️" : "🌙";
+    darkModeLabel.textContent = isDark ? "Light" : "Dark";
+  }
+
+  function getDarkModePreference() {
+    try {
+      return localStorage.getItem("darkMode") === "true";
+    } catch {
+      return false;
+    }
+  }
+
+  function saveDarkModePreference(isDark) {
+    try {
+      localStorage.setItem("darkMode", isDark);
+    } catch {
+      // Ignore storage errors (e.g. private browsing mode)
+    }
+  }
+
+  // Load saved preference
+  applyDarkMode(getDarkModePreference());
+
+  darkModeToggle.addEventListener("click", () => {
+    const isDark = !document.body.classList.contains("dark-mode");
+    saveDarkModePreference(isDark);
+    applyDarkMode(isDark);
+  });
+
   // Authentication elements
   const loginButton = document.getElementById("login-button");
   const userInfo = document.getElementById("user-info");
